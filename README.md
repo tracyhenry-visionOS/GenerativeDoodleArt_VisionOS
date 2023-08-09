@@ -28,10 +28,10 @@ This demo handles 3D content in two ways. First, the main character including it
 
 ### Setup
 
-To run this project you need XCode 15 Beta 5+ and visionOS 1.0 which you can download here.
+To run this project you need Xcode 15 Beta 5+ and visionOS 1.0 which you can download [here](https://developer.apple.com/download/all/?q=xcode%2015).
 
 1. Clone the repo.
-2. Open the project in XCode 15.
+2. Open the project in Xcode 15.
 3. Select the root project GenerativeWallArt in the view hierarchy.
 4. Go to Signing & Capabilities.
 5. Select your development team.
