@@ -28,7 +28,7 @@ This demo handles 3D content in two ways. First, the main character including it
 
 ### Setup
 
-To run this project you need XCode 15 and visionOS 1.0 which you can download here.
+To run this project you need XCode 15 Beta 5+ and visionOS 1.0 which you can download here.
 
 1. Clone the repo.
 2. Open the project in XCode 15.
@@ -36,7 +36,9 @@ To run this project you need XCode 15 and visionOS 1.0 which you can download he
 4. Go to Signing & Capabilities.
 5. Select your development team.
 6. Select the Apple Vision Pro simulator as a build target.
-7. Build and run the   
+7. Build and run the project.
+8. Select the museum scene, and move the character to the empty wall.
+9. Tap the character to start the demo
 
 ### Tutorials
 
