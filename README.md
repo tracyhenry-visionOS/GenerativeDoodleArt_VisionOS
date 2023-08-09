@@ -1,8 +1,9 @@
-# Wall Art with Apple Vision Pro
+# Generative Wall Art with Apple Vision Pro
 Explore the transformative capabilities of visionOS by creating augmented reality wall art using Vision Pro. This project integrates RealityKit, Reality Composer Pro, SwiftUI, and UIKit to offer an immersive AR experience.
 
 ![Alt Text](resources/part2.gif)
 
+Follow us on Twitter: [![Twitter](https://img.shields.io/twitter/url/https/twitter.com/tracy__henry.svg?style=social&label=Follow%20%40tvon_g)](https://twitter.com/tvon_g) [![Twitter](https://img.shields.io/twitter/url/https/twitter.com/tracy__henry.svg?style=social&label=Follow%20%40tracy__henry)](https://twitter.com/tracy__henry)
 ### visionOS APIs Used
 
 - Scene Types (WindowGroup & ImmersiveSpace)
