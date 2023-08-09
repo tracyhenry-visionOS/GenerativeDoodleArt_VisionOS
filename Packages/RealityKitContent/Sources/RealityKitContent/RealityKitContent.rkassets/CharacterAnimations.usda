@@ -1,0 +1,67 @@
+#usda 1.0
+(
+    defaultPrim = "Root"
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def Xform "Root"
+{
+    reorder nameChildren = ["wave_model", "jump_up_model", "jump_float_model", "jump_down_model"]
+    def "wave_model" (
+        active = true
+        references = @@@common_people@wave_from_idle.usdz@@@
+    )
+    {
+        float3 xformOp:scale = (0.01, 0.01, 0.01)
+        float3 xformOp:translate = (0.0020226943, 0, 0.015999734)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+        over "common_people_idle"
+        {
+            over "basic_rig" (
+                customData = {
+                    float3 rotationEulerHint = (1.5707964, -1.5707963, 0)
+                }
+            )
+            {
+            }
+
+            over "M_male1" (
+                customData = {
+                    float3 rotationEulerHint = (-1.5707964, 0, 0)
+                }
+            )
+            {
+            }
+        }
+    }
+
+    def "jump_up_model" (
+        active = true
+        references = @@@common_people@jump-up.usdz@@@
+    )
+    {
+        float3 xformOp:scale = (0.01, 0.01, 0.01)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+    }
+
+    def "jump_float_model" (
+        active = true
+        references = @@@common_people@jump-float.usdz@@@
+    )
+    {
+        float3 xformOp:scale = (0.01, 0.01, 0.01)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+    }
+
+    def "jump_down_model" (
+        active = true
+        references = @@@common_people@jump-down.usdz@@@
+    )
+    {
+        float3 xformOp:scale = (0.01, 0.01, 0.01)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+    }
+}
+
