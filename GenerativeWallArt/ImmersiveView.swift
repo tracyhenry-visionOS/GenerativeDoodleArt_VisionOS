@@ -50,6 +50,7 @@ struct ImmersiveView: View {
                 guard let projectile = projectileSceneEntity.findEntity(named: "ParticleRoot") else { return }
                 projectile.children[0].components[ParticleEmitterComponent.self]?.isEmitting = false
                 projectile.children[1].components[ParticleEmitterComponent.self]?.isEmitting = false
+                projectile.components.set(ProjectileComponent())
 
                 let impactParticleSceneEntity = try await Entity(named: "ImpactParticle", in: realityKitContentBundle)
                 guard let impactParticle = impactParticleSceneEntity.findEntity(named: "ImpactParticle") else { return }
@@ -174,7 +175,7 @@ struct ImmersiveView: View {
             case .updateWallArt:
                 // somehow a system can't seem to access viewModel
                 // so here we update one of its static variable instead
-                ImpactParticleSystem.canBurst = true
+                self.projectile?.components[ProjectileComponent.self]?.canBurst = true
 
                 // update plane image
                 // actually calling a Doodle image gen model is irrelevant to Vision OS dev
@@ -209,11 +210,14 @@ struct ImmersiveView: View {
     }
 
     func playIntroSequence() {
-        Task {
-            // reset particle system states
-            ImpactParticleSystem.bursted = false
-            ImpactParticleSystem.canBurst = false
+        // reset particle system states
+        // note that these need to happen within the main actor thread
+        // because the "components" are actor-isolated variables
+        // https://chat.openai.com/share/dc3c7b4b-8dcb-45d1-a4d1-863d7281f061
+        projectile?.components[ProjectileComponent.self]?.bursted = false
+        projectile?.components[ProjectileComponent.self]?.canBurst = false
 
+        Task {
             // show dialog box
             if !showTextField {
                 withAnimation(.easeInOut(duration: 0.3)) {

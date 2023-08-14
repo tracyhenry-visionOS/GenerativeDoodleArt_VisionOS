@@ -2,22 +2,34 @@
 import Foundation
 import RealityKit
 
+struct ProjectileComponent: Component, Codable {
+    public var bursted = false
+    public var canBurst = false
+}
+
 struct ImpactParticleSystem: System {
-    static let query = EntityQuery(where: .has(ParticleEmitterComponent.self))
-    static var bursted = false
-    static var canBurst = false
+    static let projectileQuery = EntityQuery(where: .has(ProjectileComponent.self))
+    static let particleQuery = EntityQuery(where: .has(ParticleEmitterComponent.self))
 
     init(scene: Scene) {}
 
     func update(context: SceneUpdateContext) {
-        if !Self.bursted && Self.canBurst {
-            for p in context.entities(matching: Self.query, when: .rendering) {
+        // get projectile
+        var iter = context.entities(matching: Self.projectileQuery, when: .rendering).makeIterator()
+        guard let projectile = iter.next() else { return }
+        guard var projectileComponent = projectile.components[ProjectileComponent.self] else { return }
+
+        // if it's time for a burst
+        if !projectileComponent.bursted && projectileComponent.canBurst {
+            // look for impact particles using the particle query
+            for p in context.entities(matching: Self.particleQuery, when: .rendering) {
                 if p.name == "ImpactParticle" {
-                    print("Burst!!!")
                     p.components[ParticleEmitterComponent.self]?.burst()
                 }
             }
-            Self.bursted = true
+            // modify and reassign projectile component
+            projectileComponent.bursted = true
+            projectile.components[ProjectileComponent.self] = projectileComponent
         }
     }
 }

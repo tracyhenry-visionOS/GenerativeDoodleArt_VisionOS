@@ -11,6 +11,7 @@ struct GenerativeWallArtApp: App {
         RealityKitContent.BillboardComponent.registerComponent()
         RealityKitContent.BillboardSystem.registerSystem()
         ImpactParticleSystem.registerSystem()
+        ProjectileComponent.registerComponent()
     }
 
     var body: some SwiftUI.Scene {
