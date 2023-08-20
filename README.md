@@ -12,8 +12,10 @@ Follow us on Twitter: [![Twitter](https://img.shields.io/twitter/url/https/twitt
 ### Tutorials
 [![YouTube - Subscribe](https://img.shields.io/badge/YouTube-Subscribe-ffffff?logo=youtube&logoColor=%23f22c00)](https://www.youtube.com/@tassilovg)
 
-* [Building a Vision Pro App with SwiftUI & RealityKit](https://youtu.be/IefFafD8mR8)
-* [VisionOS App From Scratch Part 1: Window Group & Immersive Space](https://youtu.be/KTFh-6LyFEI)
+* [Part 0: Building a Vision Pro App with SwiftUI & RealityKit](https://youtu.be/IefFafD8mR8)
+* [Part 1: Window Group & Immersive Space](https://youtu.be/KTFh-6LyFEI)
+* [Part 2: Reality Kit Entities & Anchors](https://youtu.be/NZ-TJ8Ln7NY)
+* [Part 3: SwiftUI Attachments, Combine, Reality Composer Pro Animations](https://youtu.be/m514qEoeOFU)
 * _More Videos coming soon!_
 <img src="resources/demo_video_thumb.png" width="400">
 
