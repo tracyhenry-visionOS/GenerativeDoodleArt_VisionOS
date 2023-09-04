@@ -102,45 +102,46 @@ struct ImmersiveView: View {
         }
         update: { _, _ in
         } attachments: {
-            VStack {
-                Text(inputText)
-                    .frame(maxWidth: 600, alignment: .leading)
-                    .font(.extraLargeTitle2)
-                    .fontWeight(.regular)
-                    .padding(40)
-                    .glassBackgroundEffect()
-                if showAttachmentButtons {
-                    HStack(spacing: 20) {
-                        Button(action: {
-                            tapSubject.send()
-                        }) {
-                            Text("Yes, let's go!")
-                                .font(.largeTitle)
-                                .fontWeight(.regular)
-                                .padding()
-                                .cornerRadius(8)
-                        }
-                        .padding()
-                        .buttonStyle(.bordered)
+            Attachment(id: "red_e") {
+                VStack {
+                    Text(inputText)
+                        .frame(maxWidth: 600, alignment: .leading)
+                        .font(.extraLargeTitle2)
+                        .fontWeight(.regular)
+                        .padding(40)
+                        .glassBackgroundEffect()
+                    if showAttachmentButtons {
+                        HStack(spacing: 20) {
+                            Button(action: {
+                                tapSubject.send()
+                            }) {
+                                Text("Yes, let's go!")
+                                    .font(.largeTitle)
+                                    .fontWeight(.regular)
+                                    .padding()
+                                    .cornerRadius(8)
+                            }
+                            .padding()
+                            .buttonStyle(.bordered)
 
-                        Button(action: {
-                            // Action for No button
-                        }) {
-                            Text("No")
-                                .font(.largeTitle)
-                                .fontWeight(.regular)
-                                .padding()
-                                .cornerRadius(8)
+                            Button(action: {
+                                // Action for No button
+                            }) {
+                                Text("No")
+                                    .font(.largeTitle)
+                                    .fontWeight(.regular)
+                                    .padding()
+                                    .cornerRadius(8)
+                            }
+                            .padding()
+                            .buttonStyle(.bordered)
                         }
-                        .padding()
-                        .buttonStyle(.bordered)
+                        .glassBackgroundEffect()
+                        .opacity(showAttachmentButtons ? 1 : 0)
                     }
-                    .glassBackgroundEffect()
-                    .opacity(showAttachmentButtons ? 1 : 0)
                 }
+                .opacity(showTextField ? 1 : 0)
             }
-            .tag("red_e")
-            .opacity(showTextField ? 1 : 0)
         }
         .gesture(SpatialTapGesture().targetedToAnyEntity().onEnded {
             _ in

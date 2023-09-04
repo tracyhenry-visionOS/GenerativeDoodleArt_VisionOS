@@ -15,14 +15,14 @@ struct ImpactParticleSystem: System {
 
     func update(context: SceneUpdateContext) {
         // get projectile
-        var iter = context.entities(matching: Self.projectileQuery, when: .rendering).makeIterator()
+        var iter = context.entities(matching: Self.projectileQuery, updatingSystemWhen: .rendering).makeIterator()
         guard let projectile = iter.next() else { return }
         guard var projectileComponent = projectile.components[ProjectileComponent.self] else { return }
 
         // if it's time for a burst
         if !projectileComponent.bursted && projectileComponent.canBurst {
             // look for impact particles using the particle query
-            for p in context.entities(matching: Self.particleQuery, when: .rendering) {
+            for p in context.entities(matching: Self.particleQuery, updatingSystemWhen: .rendering) {
                 if p.name == "ImpactParticle" {
                     p.components[ParticleEmitterComponent.self]?.burst()
                 }
