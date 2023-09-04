@@ -36,9 +36,9 @@ public struct BillboardSystem: System {
         let entities = context.scene.performQuery(Self.query).map({ $0 })
 
         guard !entities.isEmpty,
-                let pose = worldTrackingProvider.queryPose(atTimestamp: CACurrentMediaTime()) else { return }
+                let pose = worldTrackingProvider.queryDeviceAnchor(atTimestamp: CACurrentMediaTime()) else { return }
         
-        let cameraTransform = Transform(matrix: pose.originFromDeviceTransform)
+        let cameraTransform = Transform(matrix: pose.originFromAnchorTransform)
         for entity in entities {
 
             let translation = entity.transform.translation
@@ -67,10 +67,11 @@ public struct BillboardSystem: System {
             content.add(entity)
         }
     } attachments: {
-        Text("Preview")
-            .font(.system(size: 100))
-            .background(.pink)
-            .tag("previewTag")
+        Attachment(id: "previewTag") {
+            Text("Preview")
+                .font(.system(size: 100))
+                .background(.pink)
+        }
     }
     .previewLayout(.sizeThatFits)
 }
