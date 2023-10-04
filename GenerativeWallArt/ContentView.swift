@@ -13,6 +13,9 @@ struct ContentView: View {
         VStack(alignment: .leading) {
             Text("Welcome to Generative Doodle Art in Vision Pro")
                 .font(.extraLargeTitle2)
+            Button("Change Wall") {
+                viewModel.changeWall()
+            }
         }
         .padding(50)
         .glassBackgroundEffect()

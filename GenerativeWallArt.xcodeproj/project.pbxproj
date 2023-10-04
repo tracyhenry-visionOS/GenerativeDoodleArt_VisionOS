@@ -20,6 +20,7 @@
 
 /* Begin PBXFileReference section */
 		477C31572A775F9B001FDD9A /* DoodleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoodleView.swift; sourceTree = "<group>"; };
+		C416A8D02AA797B000DAC209 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		C43DA1582A63A34800F543F1 /* GenerativeWallArt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GenerativeWallArt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C43DA15C2A63A34800F543F1 /* RealityKitContent */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = RealityKitContent; sourceTree = "<group>"; };
 		C43DA15F2A63A34800F543F1 /* GenerativeWallArtApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenerativeWallArtApp.swift; sourceTree = "<group>"; };
@@ -63,6 +64,7 @@
 		C43DA15A2A63A34800F543F1 /* GenerativeWallArt */ = {
 			isa = PBXGroup;
 			children = (
+				C416A8D02AA797B000DAC209 /* Info.plist */,
 				C4CE378E2A78A4F000FF4E02 /* ImpactParticleSystem.swift */,
 				C43DA15F2A63A34800F543F1 /* GenerativeWallArtApp.swift */,
 				C43DA1612A63A34800F543F1 /* ContentView.swift */,
@@ -311,9 +313,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"GenerativeWallArt/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = UHN3MU57RR;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = GenerativeWallArt/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -337,8 +340,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"GenerativeWallArt/Preview Content\"";
+				DEVELOPMENT_TEAM = UHN3MU57RR;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = GenerativeWallArt/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

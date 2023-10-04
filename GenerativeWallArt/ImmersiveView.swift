@@ -1,4 +1,3 @@
-
 import Combine
 import RealityKit
 import SwiftUI
@@ -10,8 +9,8 @@ struct ImmersiveView: View {
     @Environment(ViewModel.self) private var viewModel
     @Environment(\.openWindow) private var openWindow
 
-    private static let planeX: Float = 3.75
-    private static let planeZ: Float = 2.625
+    static let planeX: Float = 3.75
+    static let planeZ: Float = 2.625
 
     @State private var assistant: Entity? = nil
     @State private var projectile: Entity? = nil
@@ -22,20 +21,13 @@ struct ImmersiveView: View {
     @State public var showAttachmentButtons = false
 
     @State var characterEntity: Entity = {
-        let headAnchor = AnchorEntity(.head)
-        headAnchor.position = [0.70, -0.35, -1]
+//        let headAnchor = AnchorEntity(.head)
+        let headAnchor = Entity()
+//        headAnchor.position = [0.70, -0.35, -1]
+        headAnchor.position = [0.70, 1, -1]
         let radians = -30 * Float.pi / 180
         ImmersiveView.rotateEntityAroundYAxis(entity: headAnchor, angle: radians)
         return headAnchor
-    }()
-
-    @State var planeEntity: Entity = {
-        let wallAnchor = AnchorEntity(.plane(.vertical, classification: .wall, minimumBounds: SIMD2<Float>(0.6, 0.6)))
-        let planeMesh = MeshResource.generatePlane(width: Self.planeX, depth: Self.planeZ, cornerRadius: 0.1)
-        let planeEntity = ModelEntity(mesh: planeMesh, materials: [ImmersiveView.loadImageMaterial(imageUrl: "think_different")])
-        planeEntity.name = "canvas"
-        wallAnchor.addChild(planeEntity)
-        return wallAnchor
     }()
 
     var body: some View {
@@ -43,6 +35,7 @@ struct ImmersiveView: View {
         RealityView { content, attachments in
             // Add the initial RealityKit content
             do {
+                viewModel.initializePlaneEntity()
                 // identify root
                 let immersiveEntity = try await Entity(named: "Immersive", in: realityKitContentBundle)
 
@@ -61,9 +54,14 @@ struct ImmersiveView: View {
 
                 characterEntity.addChild(immersiveEntity)
                 characterEntity.addChild(projectile)
-                planeEntity.addChild(impactParticle)
+//                let sphere = ModelEntity(mesh: .generateSphere(radius: 0.2), materials: [SimpleMaterial(color: .blue, roughness: 1, isMetallic: false)])
+//                sphere.position = viewModel.planeAnchorEntity.position
+
+                viewModel.planeAnchorEntity.addChild(impactParticle)
+//                content.add(sphere)
                 content.add(characterEntity)
-                content.add(planeEntity)
+                content.add(viewModel.planeAnchorEntity)
+                content.add(viewModel.allPlaneAnchorEntity)
 
                 // identify assistant + applying basic animation
                 let characterAnimationSceneEntity = try await Entity(named: "CharacterAnimations", in: realityKitContentBundle)
@@ -143,6 +141,12 @@ struct ImmersiveView: View {
                 .opacity(showTextField ? 1 : 0)
             }
         }
+        .task {
+            await viewModel.startARKitSession()
+        }
+        .task {
+            await viewModel.subscribeToPlaneDetectionUpdates()
+        }
         .gesture(SpatialTapGesture().targetedToAnyEntity().onEnded {
             _ in
             viewModel.flowState = .intro
@@ -159,14 +163,20 @@ struct ImmersiveView: View {
                     // hardcode the destination where the particle is going to move
                     // so that it always traverse towards the center of the simulator screeen
                     // the reason we do that is because we can't get the real transform of the anchor entity
+                    print("Plane anchor Entity position: ", viewModel.planeAnchorEntity.position)
+                    print("Character Entity position: ", self.characterEntity.position)
                     let dest = Transform(scale: projectile.transform.scale, rotation: projectile.transform.rotation,
-                                         translation: [-0.7, 0.15, -0.5] * 2)
+//                                         translation: [-0.7, 0.15, -0.5] * 2)
+                                         translation: viewModel.planeAnchorEntity.position)
                     Task {
                         let duration = 3.0
                         projectile.position = [0, 0.1, 0]
                         projectile.children[0].components[ParticleEmitterComponent.self]?.isEmitting = true
                         projectile.children[1].components[ParticleEmitterComponent.self]?.isEmitting = true
-                        projectile.move(to: dest, relativeTo: self.characterEntity, duration: duration, timingFunction: .easeInOut)
+                        print("before move transform:", projectile.position)
+                        projectile.move(to: dest, relativeTo: nil, duration: duration, timingFunction: .easeInOut)
+                        print("after move transform:", projectile.transform)
+                        print(characterEntity.transform)
                         try? await Task.sleep(for: .seconds(duration))
                         projectile.children[0].components[ParticleEmitterComponent.self]?.isEmitting = false
                         projectile.children[1].components[ParticleEmitterComponent.self]?.isEmitting = false
@@ -183,7 +193,7 @@ struct ImmersiveView: View {
                 // so we hardcoded the result image here
                 // you can easily do that by calling replicate's controlnet for example
                 // or run a control net locally
-                if let plane = planeEntity.findEntity(named: "canvas") as? ModelEntity {
+                if let plane = viewModel.planeAnchorEntity.findEntity(named: "canvas") as? ModelEntity {
                     plane.model?.materials = [ImmersiveView.loadImageMaterial(imageUrl: "sketch")]
                 }
                 if let assistant = self.assistant, let jumpAnimation = self.jumpAnimation {

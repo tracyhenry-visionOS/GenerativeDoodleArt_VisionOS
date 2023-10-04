@@ -4,6 +4,7 @@ import RealityKitContent
 import SwiftUI
 
 @main
+@MainActor
 struct GenerativeWallArtApp: App {
     @State private var viewModel = ViewModel()
 
